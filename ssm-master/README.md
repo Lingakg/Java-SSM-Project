@@ -1,3 +1,7 @@
+# 本篇来自GitHub的另一位大神，为了学习放上来的
+原文地址：[https://github.com/liyifeng1994/ssm](https://github.com/liyifeng1994/ssm)
+
+
 # SSM
 手把手教你整合最优雅SSM框架：SpringMVC + Spring + MyBatis
 
