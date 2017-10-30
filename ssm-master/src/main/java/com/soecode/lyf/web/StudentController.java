@@ -1,7 +1,9 @@
 package com.soecode.lyf.web;
 
+import com.soecode.lyf.base.BaseModel;
 import com.soecode.lyf.entity.Student;
 import com.soecode.lyf.service.StudentService;
+import javafx.beans.binding.ObjectExpression;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,8 +44,9 @@ public class StudentController {
      * */
     @RequestMapping(value="/{studentId}",method = RequestMethod.GET)
     @ResponseBody
-    private Student queryStudentById(@PathVariable("studentId") long studentid){
-        Student student = studentService.getStudentById(studentid);
+    private BaseModel queryStudentById(@PathVariable("studentId") long studentid){
+        Student studentInfo = studentService.getStudentById(studentid);
+        BaseModel student = new BaseModel(studentInfo);
         return student;
     }
 

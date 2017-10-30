@@ -33,4 +33,13 @@ public interface StudentDao {
      * @parma studentAge
      * */
     void insertStudent(@Param("studentName") String studentName,@Param("studentSex") int studentSex,@Param("studentAge") int studentAge);
+
+
+    /**
+     * 修改一个用户
+     *
+     * @param studentName
+     * @param studengSex
+     * @param studentAge
+     * */
 }
