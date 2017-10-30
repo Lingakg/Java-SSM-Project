@@ -23,4 +23,14 @@ public interface StudentService {
      * */
     List<Student> getStudentList();
 
+    /**
+     *
+     * 添加一个学生
+     * @param studentName
+     * @parma studentSex
+     * @param studentAge
+     * */
+
+    String insertStudent(String studentName,int studentSex,int studentAge);
+
 }

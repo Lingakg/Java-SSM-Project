@@ -30,4 +30,16 @@
         LIMIT #{offset}, #{limit}
     </select>
 
+    <insert id="insertStudent" parameterType="Student">
+        INSERT INTO student (
+        name,
+        sex,
+        age)
+        VALUES   (
+        #{studentName},
+        #{studentSex},
+        #{studentAge})
+    </insert>
+
+
 </mapper>

@@ -23,4 +23,14 @@ public interface StudentDao {
      * @return
      */
     List<Student> queryStudentAll(@Param("offset") int offset,@Param("limit") int limit);
+
+
+    /**
+     * 添加一个用户
+     *
+     * @param studentName
+     * @param studentSex
+     * @parma studentAge
+     * */
+    void insertStudent(@Param("studentName") String studentName,@Param("studentSex") int studentSex,@Param("studentAge") int studentAge);
 }
