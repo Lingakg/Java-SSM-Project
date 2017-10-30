@@ -22,3 +22,27 @@ CREATE TABLE `appointment` (
   PRIMARY KEY (`book_id`, `student_id`),
   INDEX `idx_appoint_time` (`appoint_time`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='预约图书表'
+
+
+
+-- 创建学生表
+CREATE TABLE `student` (
+  `student_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '学生ID',
+  `name` varchar(100) NOT NULL COMMENT '学生姓名',
+  `sex` int(11) NOT NULL COMMENT '学生性别',
+  `age` int(11) NOT NULL COMMENT '学生年龄',
+  PRIMARY KEY (`book_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1000 DEFAULT CHARSET=utf8 COMMENT='学生表'
+
+
+-- 初始化学生数据
+INSERT INTO `student` (`student_id`, `name`, `sex`,`age`)
+VALUES
+	(1000100, 'sunny', 1, 10),
+	(1000101, 'chery', 1, 20),
+	(1000102, 'mike', 1, 30),
+	(1000103, 'join', 1, 40)
+
+
+
+

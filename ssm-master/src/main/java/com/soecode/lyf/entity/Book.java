@@ -1,9 +1,12 @@
 package com.soecode.lyf.entity;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
 /**
  * 图书实体
  */
-public class Book {
+public class  Book {
 
 	private long bookId;// 图书ID
 
@@ -46,7 +49,7 @@ public class Book {
 
 	@Override
 	public String toString() {
-		return "Book [bookId=" + bookId + ", name=" + name + ", number=" + number + "]";
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
 
 

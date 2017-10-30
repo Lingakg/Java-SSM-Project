@@ -32,15 +32,17 @@ public class BookController {
 	private BookService bookService;
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	private String list(Model model) {
+	@ResponseBody
+	private List list(Model model) {
 		List<Book> list = bookService.getList();
 		model.addAttribute("list", list);
 		// list.jsp + model = ModelAndView
-		return "list";// WEB-INF/jsp/"list".jsp
+		return list;// WEB-INF/jsp/"list".jsp
 	}
 
 	@RequestMapping(value = "/{bookId}/detail", method = RequestMethod.GET)
-	private String detail(@PathVariable("bookId") Long bookId, Model model) {
+	@ResponseBody
+	private Object detail(@PathVariable("bookId") Long bookId, Model model) {
 		if (bookId == null) {
 			return "redirect:/book/list";
 		}
@@ -53,7 +55,7 @@ public class BookController {
 	}
 
 	// ajax json
-	@RequestMapping(value = "/{bookId}/appoint", method = RequestMethod.POST, produces = {
+	@RequestMapping(value = "/{bookId}/appoint", method = RequestMethod.GET, produces = {
 			"application/json; charset=utf-8" })
 	@ResponseBody
 	private Result<AppointExecution> appoint(@PathVariable("bookId") Long bookId, @RequestParam("studentId") Long studentId) {

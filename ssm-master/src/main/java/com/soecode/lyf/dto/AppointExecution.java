@@ -2,6 +2,8 @@ package com.soecode.lyf.dto;
 
 import com.soecode.lyf.entity.Appointment;
 import com.soecode.lyf.enums.AppointStateEnum;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * 封装预约执行后结果
@@ -70,10 +72,9 @@ public class AppointExecution {
 		this.appointment = appointment;
 	}
 
+
 	@Override
 	public String toString() {
-		return "AppointExecution [bookId=" + bookId + ", state=" + state + ", stateInfo=" + stateInfo + ", appointment="
-				+ appointment + "]";
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
 	}
-
 }
