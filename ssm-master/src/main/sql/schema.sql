@@ -38,10 +38,10 @@ CREATE TABLE `student` (
 -- 初始化学生数据
 INSERT INTO `student` (`student_id`, `name`, `sex`,`age`)
 VALUES
-	(1000100, 'sunny', 1,10),
-	(1000101, 'chery', 1,20),
-	(1000102, 'mike', 1,30),
-	(1000103, 'join', 1,40)
+	(1000100, 'sunny', 1, 10),
+	(1000101, 'chery', 1, 20),
+	(1000102, 'mike', 1, 30),
+	(1000103, 'join', 1, 40)
 
 
 
