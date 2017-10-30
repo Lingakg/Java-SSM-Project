@@ -4,9 +4,33 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="../js/vue.min.js"></script>
-    <script src="../js/"></script>
+    <script src="../js/axios.min.js"></script>
 </head>
 <body>
 
+<div id="app"></div>
+
 </body>
 </html>
+<script>
+    
+    new Vue({
+        el:"#app",
+        data:{
+            
+        },
+        methods:function(){
+            
+        },
+        mounted:function () {
+            axios.get("/student/1000100")
+                .then(function(res){
+                    console.log(res);
+                })
+                .catch(function(err){
+                    console.log(err);
+                })
+        }
+    })
+    
+</script>
