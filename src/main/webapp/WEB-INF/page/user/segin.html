@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <script src="/js/vue.min.js"></script>
+    <script src="/js/vue-resourse.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="login">
+
+    <input type="text" v-model="username">
+    <input type="text" v-model="password">
+    <input type="text" v-model="repeatPassword">
+    <a href="javascript:void(0);" @click="submit">提交</a>
+</div>
+
+</body>
+</html>
+<script>
+
+//    axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+//
+//    Vue.prototype.axios=axios;
+
+    new Vue({
+        el:"#login",
+        data:{
+            username:'',
+            password:'',
+            repeatPassword:''
+        },
+        methods:{
+            submit:function(){
+                var that = this;
+
+                $.ajax({
+                    url:'/user/segin',
+                    type:"POST",
+                    data:{username:that.username,password:that.password},
+                    success:function(data){
+                        console.log(data)
+                    }
+                })
+
+//                this.axios({
+//                    url:"/user/segin",
+//                    method:"POST",
+//                    contentType:"application/x-www-form-urlencoded; charset=UTF-8",
+//                    data:{username:that.username,password:that.password},
+//                    success:function(data){
+//                        console.log(data)
+//                    }
+//
+//                })
+//                this.axios.post("/user/segin",{
+//                    username:that.username,
+//                    password:that.password
+//                }).then(function (res) {
+//                    console.log(res)
+//                })
+//
+
+//                var l = {username:that.username,password:that.password}
+//                var param = JSON.stringify(l);
+//                this.$http.post("/user/segin",param).then(function (res) {
+//                    console.log(res)
+//                })
+
+
+
+            }
+        },
+        mounted:function () {
+
+        }
+    })
+
+</script>

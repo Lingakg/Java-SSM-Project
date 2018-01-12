@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/vue.min.js"></script>
+    <script src="js/axios.min.js"></script>
+</head>
+<body>
+
+<div id="app">
+    <input type="file" id="uploading" style="display: none">
+    <a href="javascript:void(0);" @click="upFile">点击上传</a>
+    <h1>通用用户表信息</h1>
+    <h4>{{msg}}</h4>
+    <p v-for="item in infoArr">{{item}}</p>
+</div>
+
+</body>
+</html>
+<script>
+
+    Vue.prototype.axios=axios;
+
+    new Vue({
+        el:"#app",
+        data:{
+            info:{},
+            infoArr:[],
+            msg:''
+        },
+        methods:{
+            upFile:function () {
+                var xhr = null;
+                var fd = new FormData(),
+                    xhr = new XMLHttpRequest();
+                var input = document.getElementById("uploading");
+                input.click();
+                input.onchange = function () {
+                    if (!input.value) {
+                        return;
+                    }
+                    fd.append('upfile', input.files[0]);
+                    xhr.open('post', "/upload");
+                    xhr.onreadystatechange = function () {
+                        if (xhr.status == 200) {
+                            if (xhr.readyState == 4) {
+                                var res = JSON.parse(xhr.responseText);
+                                console.log(res)
+                                if (res.result == "success") {
+                                    sessionStorage.setItem("sendSuccess", JSON.stringify(res.message));
+                                    sessionStorage.setItem("isSuccess", 1);
+                                } else {
+                                    sessionStorage.setItem("sendSuccess", JSON.stringify(res.message));
+                                    sessionStorage.setItem("isSuccess", 0);
+                                }
+                            }
+                        }
+                    }
+                    xhr.send(fd);
+                }
+            }
+        },
+        mounted:function () {
+            var that = this;
+            this.axios.get("/user/1281111514")
+                .then(function(res){
+                    console.log(res.data);
+                    that.msg=res.data.message;
+                    that.info=res.data.data
+                    for(var i in that.info){
+                        that.infoArr.push(i+" ： "+that.info[i])
+                    }
+                })
+                .catch(function(err){
+                    console.log(err.data);
+                })
+        }
+    })
+
+</script>

@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>My WebSocket</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        #chat {
+            width: 80%;
+            min-height: 500px;
+            margin: 0 auto;
+            border-radius: 50px;
+        }
+
+        .chat-header {
+            height: 50px;
+            width: 100%;
+            background-color: dodgerblue;
+        }
+
+        .chat-content {
+            height: 500px;
+            width: 100%;
+            background-color: cornsilk;
+            position: relative;
+        }
+
+        .chat-msg {
+            height: 300px;
+            width: 100%;
+            background-color: cornsilk;
+            overflow-y: scroll;
+        }
+
+        .chat-footer {
+            height: 50px;
+            width: 100%;
+            background-color: dodgerblue;
+        }
+
+        .chat-input {
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            width: 100%;
+            height: 200px;
+            background-color: blanchedalmond;
+        }
+
+        .chat-send {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+        }
+
+        #text {
+            width: 100%;
+            height: 100%;
+        }
+
+        .chat-message {
+            background-color: aqua;
+            margin: 5px 0;
+        }
+    </style>
+    <script src="/js/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+
+<section id="chat">
+    <header class="chat-header">
+        Welcome
+        <button onclick="closeWebSocket()">Close</button>
+        <input type="text" v-model="nickname">
+    </header>
+    <section class="chat-content">
+        <div class="chat-msg" id="msg-con">
+            <div class="chat-message" v-for="item in message">
+                <p>{{item.name}}:</p>
+                <p>{{item.message}}</p>
+                <p>{{item.date}}</p>
+                <p></p>
+            </div>
+        </div>
+        <div class="chat-input">
+            <textarea id="text" type="text" v-model="content"></textarea>
+            <button class="chat-send" @click="send">Send</button>
+        </div>
+    </section>
+    <footer class="chat-footer">
+
+    </footer>
+</section>
+
+
+</body>
+
+<script type="text/javascript">
+
+    var websocket = null;
+    //判断当前浏览器是否支持WebSocket
+    if ('WebSocket' in window) {
+        websocket = new WebSocket("ws://localhost:8889/websocket");
+    }
+    else {
+        alert('Not support websocket')
+    }
+
+    new Vue({
+        el: "#chat",
+        data: {
+            message: [],
+            content: '',
+            nickname:''
+        },
+        methods: {
+            send: function () {
+                localStorage.setItem('nickname',this.nickname)
+                for (var i = 0; i < 99; i++) {
+                    var message = this.content;
+                    var content = {
+                        message: message,
+                        name: localStorage.getItem("nickname"),
+                        date: new Date().toLocaleString(),
+                        ip: 'localhost'
+                    }
+                    websocket.send(JSON.stringify(content));
+                }
+            }
+        },
+        mounted: function () {
+            var that = this
+
+            //连接发生错误的回调方法
+            websocket.onerror = function () {
+                setMessageInnerHTML("error");
+            };
+
+            //连接成功建立的回调方法
+
+            //接收到消息的回调方法
+            websocket.onmessage = function () {
+                var res = JSON.parse(event.data)
+                that.message.push(res)
+                console.log(that.message)
+                var chat = document.getElementById("msg-con");
+
+                chat.scrollTop = chat.scrollHeight + 50;
+            }
+
+            //连接关闭的回调方法
+            websocket.onclose = function () {
+                setMessageInnerHTML("close");
+            }
+
+            //监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+            window.onbeforeunload = function () {
+                websocket.close();
+            }
+
+            //将消息显示在网页上
+
+            //关闭连接
+            function closeWebSocket() {
+                websocket.close();
+            }
+        }
+    })
+
+
+</script>
+</html>
